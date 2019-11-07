@@ -1,0 +1,9 @@
+name: Hexo Deploy Action
+description: The Deployer of hexo project.
+author: MilesChou
+runs:
+  using: docker
+  image: Dockerfile
+branding:
+  icon: package
+  color: blue
