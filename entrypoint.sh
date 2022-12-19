@@ -20,7 +20,7 @@ if [ -z "${PERSONAL_TOKEN}" ]; then
 fi
 
 # Github workspace.
-cd ${GITHUB_WORKSPACE}
+cd "${GITHUB_WORKSPACE}"
 
 npm install
 
@@ -29,12 +29,23 @@ npm install
 cd public
 
 git init
+
+echo Config the safe directory -- workaround
+git config --global --add safe.directory $(pwd)
+git config --global --list
+
+echo Set user name and user email...
 git config user.name "${GITHUB_ACTOR}"
 git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+
+echo Set remote repository
 git remote add origin "https://x-access-token:${PERSONAL_TOKEN}@github.com/${REPOSITORY}.git"
 
+echo Create new branch and add ALL files
 git checkout --orphan ${BRANCH}
 git add --all
+
+echo Commit and push
 git commit --allow-empty -m "Deploying to ${BRANCH}"
 
 git push origin "${BRANCH}" --force
