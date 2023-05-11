@@ -1,0 +1,20 @@
+name: Publish to GitHub Container Registry
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build Image
+        uses: elgohr/Publish-Docker-Github-Action@v5
+        with:
+          name: mileschou/hexo-deploy
+          username: mileschou
+          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: ghcr.io
